@@ -6,7 +6,7 @@ It's a child theme of [Blockbase](https://wordpress.org/themes/blockbase/), set 
 
 ## What it does
 
-- **Notes with a margin rail.** Pages put the reading column next to a sticky sidebar showing when the note was planted and last tended, its categories and tags, and where it sits in the page tree.
+- **Notes with a margin rail.** Pages put the reading column next to a sticky sidebar showing when the note was planted and last tended, its categories and tags, the posts that link to it (pingbacks), and where it sits in the page tree.
 - **Growth stages.** Notes tended in the last 30 days get a small "New growth" sprout. Notes untouched for two years read as "Dormant". Both come from the real modified date.
 - **Area pages.** Pages whose body is just a list of child pages render that list as a nested, ruled tree with child counts. The sidebar stops repeating the same children.
 - **Protected notes.** The "Protected: " title prefix is dropped and a lock icon marks password-protected notes in lists instead.

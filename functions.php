@@ -195,4 +195,51 @@ add_filter(
 );
 
 
+/**
+ * "Linked from" in the note sidebar: approved pingbacks and trackbacks, so the
+ * places that cite a note sit beside it rather than buried among comments.
+ * Renders nothing when a note has none.
+ */
+add_action(
+	'init',
+	function () {
+		register_block_type(
+			'chucks-garden/pingbacks',
+			array(
+				'render_callback' => function () {
+					$pings = get_comments(
+						array(
+							'post_id' => get_the_ID(),
+							'type'    => array( 'pingback', 'trackback' ),
+							'status'  => 'approve',
+							'order'   => 'DESC',
+						)
+					);
+					if ( ! $pings ) {
+						return '';
+					}
+
+					$items = '';
+					foreach ( $pings as $ping ) {
+						// Pingback titles arrive as "Post title – Site name"; keep the post title.
+						// A source with no title sends only the site name, so name its host instead.
+						$title = html_entity_decode( $ping->comment_author, ENT_QUOTES, 'UTF-8' );
+						$short = preg_replace( '/\s+[–—|]\s+[^–—|]+$/u', '', $title );
+						$title = $short === $title ? preg_replace( '/^www\./', '', (string) wp_parse_url( $ping->comment_author_url, PHP_URL_HOST ) ) : $short;
+						$items .= sprintf(
+							'<li><a href="%s">%s</a> <time datetime="%s">%s</time></li>',
+							esc_url( $ping->comment_author_url ),
+							esc_html( $title ),
+							esc_attr( get_comment_date( 'c', $ping ) ),
+							esc_html( get_comment_date( 'M Y', $ping ) )
+						);
+					}
+
+					return '<div class="garden-pings"><p class="garden-label">' . esc_html__( 'Linked from', 'chucks-garden' ) . '</p><ul>' . $items . '</ul></div>';
+				},
+			)
+		);
+	}
+);
+
 add_action( 'admin_init', 'remove_editor_styles' );
