@@ -1,0 +1,61 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"className":"garden-note garden-note--wide","align":"wide","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide garden-note garden-note--wide"><!-- wp:group {"className":"garden-note__head","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-note__head"><!-- wp:breadcrumbs {"className":"garden-crumbs","fontSize":"x-small"} /-->
+
+<!-- wp:post-title {"level":1,"className":"garden-note__title"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-frontmatter","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-frontmatter"><!-- wp:group {"className":"garden-meta__item","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-meta__item"><!-- wp:paragraph {"className":"garden-label"} -->
+<p class="garden-label">Planted</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-date {"format":"M j, Y","className":"garden-meta__value","metadata":{"bindings":{"datetime":{"source":"core/post-data","args":{"field":"date"}}}}} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-meta__item","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-meta__item"><!-- wp:paragraph {"className":"garden-label"} -->
+<p class="garden-label">Tended</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:tabor/post-modified-time {"content":" ","format":"M j, Y","className":"garden-meta__value"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-meta__item","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-meta__item"><!-- wp:paragraph {"className":"garden-label"} -->
+<p class="garden-label">Filed under</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-terms {"term":"category","className":"garden-terms"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-meta__item","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-meta__item"><!-- wp:paragraph {"className":"garden-label"} -->
+<p class="garden-label">Tagged</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-terms {"term":"post_tag","className":"garden-terms"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"main","className":"garden-note__main garden-note__main--wide","layout":{"type":"default"}} -->
+<main class="wp-block-group garden-note__main garden-note__main--wide"><!-- wp:post-content {"metadata":{"ignoredHookedBlocks":["activitypub/reactions"]},"layout":{"type":"default"}} /--></main>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-tree garden-tree--foot","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-tree garden-tree--foot"><!-- wp:paragraph {"className":"garden-label"} -->
+<p class="garden-label">Nearby in the garden</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:telex/block-telex-page-family-tree {"fontSize":"x-small"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"garden-note__foot","layout":{"type":"constrained"}} -->
+<div class="wp-block-group garden-note__foot"><!-- wp:comments {"legacy":true} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer-container"} /-->

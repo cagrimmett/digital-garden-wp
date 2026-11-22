@@ -1,0 +1,167 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"customTemplates": [
+		{
+			"name": "wp-custom-template-page-no-sidebar",
+			"title": "Page - no sidebar",
+			"postTypes": [ "page", "post" ]
+		}
+	],
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
+		"layout": {
+			"contentSize": "40rem",
+			"wideSize": "72rem"
+		},
+		"color": {
+			"palette": [
+				{ "slug": "background", "name": "Paper", "color": "#faf8f4" },
+				{ "slug": "foreground", "name": "Ink", "color": "#23201b" },
+				{ "slug": "primary", "name": "Rust", "color": "#c0451d" },
+				{ "slug": "secondary", "name": "Deep rust", "color": "#8f3214" },
+				{ "slug": "tertiary", "name": "Wash", "color": "#efe9dd" },
+				{ "slug": "muted", "name": "Muted ink", "color": "#6e675b" },
+				{ "slug": "sage", "name": "Sage", "color": "#5d7052" },
+				{ "slug": "rule", "name": "Rule", "color": "#e3ddd1" }
+			]
+		},
+		"typography": {
+			"fluid": true,
+			"fontFamilies": [
+				{
+					"slug": "body",
+					"name": "ET Book",
+					"fontFamily": "\"ET Book\", Iowan Old Style, Palatino, Georgia, serif",
+					"fontFace": [
+						{
+							"fontFamily": "ET Book",
+							"fontWeight": "400",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./assets/fonts/et-book-roman-line-figures.woff",
+								"file:./assets/fonts/et-book-roman-line-figures.ttf"
+							]
+						},
+						{
+							"fontFamily": "ET Book",
+							"fontWeight": "700",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./assets/fonts/et-book-bold-line-figures.woff",
+								"file:./assets/fonts/et-book-bold-line-figures.ttf"
+							]
+						},
+						{
+							"fontFamily": "ET Book",
+							"fontWeight": "400",
+							"fontStyle": "italic",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./assets/fonts/et-book-display-italic-old-style-figures.woff",
+								"file:./assets/fonts/et-book-display-italic-old-style-figures.ttf"
+							]
+						}
+					]
+				},
+				{
+					"slug": "ui",
+					"name": "Interface",
+					"fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif"
+				},
+				{
+					"slug": "mono",
+					"name": "Mono",
+					"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "x-small", "name": "X Small", "size": "0.8125rem" },
+				{ "slug": "small", "name": "Small", "size": "0.9375rem" },
+				{ "slug": "medium", "name": "Medium", "size": "1.1875rem" },
+				{ "slug": "large", "name": "Large", "size": "1.4rem" },
+				{ "slug": "x-large", "name": "X Large", "size": "1.9rem" },
+				{ "slug": "huge", "name": "Huge", "size": "2.6rem" }
+			]
+		},
+		"spacing": {
+			"units": [ "px", "em", "rem", "%", "vw" ],
+			"spacingSizes": [
+				{ "slug": "10", "name": "1", "size": "0.5rem" },
+				{ "slug": "20", "name": "2", "size": "1rem" },
+				{ "slug": "30", "name": "3", "size": "1.75rem" },
+				{ "slug": "40", "name": "4", "size": "2.75rem" },
+				{ "slug": "50", "name": "5", "size": "4rem" },
+				{ "slug": "60", "name": "6", "size": "6rem" }
+			]
+		},
+		"custom": {
+			"measure": "40rem",
+			"gap": { "vertical": "1.75rem", "horizontal": "1.75rem" }
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--background)",
+			"text": "var(--wp--preset--color--foreground)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--body)",
+			"fontSize": "var(--wp--preset--font-size--medium)",
+			"lineHeight": "1.62"
+		},
+		"spacing": {
+			"blockGap": "1.4rem",
+			"padding": {
+				"left": "var(--wp--preset--spacing--30)",
+				"right": "var(--wp--preset--spacing--30)"
+			}
+		},
+		"elements": {
+			"link": {
+				"color": { "text": "var(--wp--preset--color--primary)" },
+				":hover": { "color": { "text": "var(--wp--preset--color--secondary)" } }
+			},
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--body)",
+					"fontWeight": "700",
+					"lineHeight": "1.2"
+				}
+			},
+			"h1": { "typography": { "fontSize": "var(--wp--preset--font-size--huge)" } },
+			"h2": { "typography": { "fontSize": "var(--wp--preset--font-size--x-large)" } },
+			"h3": { "typography": { "fontSize": "var(--wp--preset--font-size--large)" } },
+			"caption": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--ui)",
+					"fontSize": "var(--wp--preset--font-size--x-small)"
+				},
+				"color": { "text": "var(--wp--preset--color--muted)" }
+			}
+		},
+		"blocks": {
+			"core/code": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--mono)", "fontSize": "var(--wp--preset--font-size--small)" }
+			},
+			"core/preformatted": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--mono)", "fontSize": "var(--wp--preset--font-size--small)" }
+			},
+			"core/post-date": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--ui)", "fontSize": "var(--wp--preset--font-size--x-small)" }
+			},
+			"core/post-terms": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--ui)", "fontSize": "var(--wp--preset--font-size--x-small)" }
+			},
+			"core/search": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--ui)", "fontSize": "var(--wp--preset--font-size--small)" }
+			},
+			"core/page-list": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--ui)" }
+			}
+		}
+	}
+}

@@ -1,0 +1,1773 @@
+/*
+Theme Name: Chuck's Garden
+Description: A child theme of blockbase, scaffolded by Studio Code.
+Template: blockbase
+Requires at least: 6.7
+Tested up to: 6.9
+Requires PHP: 7.2
+Version: 0.1.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: chucks-garden
+Tags: full-site-editing, block-patterns, block-styles, wide-blocks, accessibility-ready, style-variations
+*/
+
+:root {
+	--garden-paper: var( --wp--preset--color--background );
+	--garden-ink: var( --wp--preset--color--foreground );
+	--garden-rust: var( --wp--preset--color--primary );
+	--garden-deep: var( --wp--preset--color--secondary );
+	--garden-wash: var( --wp--preset--color--tertiary );
+	--garden-muted: var( --wp--preset--color--muted );
+	--garden-sage: var( --wp--preset--color--sage );
+	--garden-rule: var( --wp--preset--color--rule );
+	--garden-ui: var( --wp--preset--font-family--ui );
+	--garden-measure: 40rem;
+	--garden-sidebar: 15rem;
+}
+
+/* === dark mode === */
+:root {
+	color-scheme: light;
+}
+
+@media ( prefers-color-scheme: dark ) {
+	:root {
+		color-scheme: dark;
+		--wp--preset--color--background: #171512;
+		--wp--preset--color--foreground: #e9e3d6;
+		--wp--preset--color--primary: #f08a63;
+		--wp--preset--color--secondary: #ffb094;
+		--wp--preset--color--tertiary: #221f19;
+		--wp--preset--color--muted: #9c9384;
+		--wp--preset--color--sage: #8fa383;
+		--wp--preset--color--rule: #322e26;
+	}
+
+	body {
+		background-color: var( --garden-paper );
+		color: var( --garden-ink );
+	}
+
+	img:not( [src$='.svg'] ),
+	.wp-block-image img {
+		filter: brightness( 0.92 ) contrast( 1.02 );
+	}
+}
+
+/* === reset === */
+.wp-site-blocks > * + * {
+	margin-block-start: 0;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+img,
+svg,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+::selection {
+	background-color: var( --garden-rust );
+	color: var( --garden-paper );
+}
+
+html {
+	caret-color: var( --garden-rust );
+	scrollbar-color: color-mix( in srgb, var( --garden-muted ) 45%, transparent ) transparent;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.wp-element-button:focus-visible {
+	outline: 2px solid var( --garden-rust );
+	outline-offset: 2px;
+	border-radius: 1px;
+}
+
+/* Blockbase ships a hard-coded serif/system stack and link colors on some
+   blocks; let the palette and font presets win in the child. */
+body,
+.wp-site-blocks {
+	background-color: var( --garden-paper );
+	color: var( --garden-ink );
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+/* === typography === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	letter-spacing: -0.011em;
+	text-wrap: balance;
+}
+
+p,
+li {
+	text-wrap: pretty;
+}
+
+.wp-block-post-content > * + h2,
+.wp-block-post-content > * + h3,
+.wp-block-post-content > * + h4 {
+	margin-top: 2.25em;
+}
+
+.wp-block-post-content h2,
+.wp-block-post-content h3 {
+	margin-bottom: 0.5em;
+}
+
+/* Prose links get an underline so they are legible without relying on hue
+   alone; navigational lists stay clean. */
+.wp-block-post-content p a,
+.wp-block-post-content li a,
+.wp-block-post-content td a {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.14em;
+	text-decoration-color: color-mix( in srgb, var( --garden-rust ) 45%, transparent );
+	transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+
+.wp-block-post-content p a:hover,
+.wp-block-post-content li a:hover,
+.wp-block-post-content td a:hover {
+	text-decoration-color: var( --garden-deep );
+}
+
+.wp-block-post-content ul,
+.wp-block-post-content ol {
+	padding-left: 1.15em;
+	margin-left: 0;
+}
+
+.wp-block-post-content li + li {
+	margin-top: 0.35em;
+}
+
+/* Blockbase sizes titles with class selectors, which beat theme.json's
+   zero-specificity :where() output, so the reading scale is set here. */
+.wp-block-post-title {
+	font-size: var( --wp--preset--font-size--huge );
+	font-weight: 700;
+	line-height: 1.13;
+}
+
+.wp-block-post-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.wp-block-post-title a:hover {
+	color: var( --garden-rust );
+}
+
+/* The child-page list is rendered as raw markup by get-subpages-list, so it is
+   styled by container rather than by block class. The plugin indents its
+   wrapper by 25px, which knocked the list out of line with the title. */
+.entry-content #blog-page-main {
+	padding-left: 0;
+}
+
+#blog-page-main ul {
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+
+/* Top level of the tree reads as a row of ruled entries; the rules and the
+   nested hairline carry the structure, so no bullets. */
+#blog-page-main > ul > li {
+	margin: 0;
+	border-bottom: 1px solid var( --garden-rule );
+}
+
+#blog-page-main > ul > li:first-child {
+	border-top: 1px solid var( --garden-rule );
+}
+
+#blog-page-main li a {
+	display: block;
+	padding: 0.62rem 0.5rem 0.62rem 0;
+	text-decoration: none;
+	color: var( --garden-ink );
+	transition: color 0.15s ease, padding-left 0.15s ease;
+}
+
+#blog-page-main li a:hover {
+	color: var( --garden-rust );
+	padding-left: 0.35rem;
+}
+
+/* Nested levels: quieter, indented against a hairline, and no row rules — so
+   depth is legible without every entry competing for the same weight. */
+#blog-page-main ul ul {
+	margin: 0 0 0.5rem 0.15rem;
+	padding-left: 0.9rem;
+	border-left: 1px solid var( --garden-rule );
+}
+
+#blog-page-main ul ul li {
+	border: 0;
+	margin: 0;
+}
+
+#blog-page-main ul ul li a {
+	padding: 0.2rem 0.5rem 0.2rem 0;
+	font-size: 0.95rem;
+	color: var( --garden-muted );
+}
+
+#blog-page-main ul ul ul li a {
+	font-size: 0.9rem;
+}
+
+/* A branch heading stays a touch stronger than the notes beneath it. */
+#blog-page-main > ul > li > a {
+	font-size: 1.0625rem;
+}
+
+/* Password-protected notes: a small lock instead of core's "Protected: "
+   prefix (see functions.php). */
+.subpages-lock {
+	display: inline-block;
+	width: 0.7em;
+	height: 0.7em;
+	margin-left: 0.4rem;
+	color: var( --garden-muted );
+	vertical-align: -0.02em;
+}
+
+.wp-block-post-content blockquote {
+	border-left: 2px solid var( --garden-rule );
+	margin-left: 0;
+	padding-left: 1.25rem;
+	font-style: italic;
+	color: var( --garden-muted );
+}
+
+.wp-block-post-content :not( pre ) > code {
+	background-color: var( --garden-wash );
+	border-radius: 3px;
+	padding: 0.1em 0.35em;
+	font-size: 0.88em;
+}
+
+/* Snippets were being clipped at the reading measure with no way to scroll.
+   They now fill the column and scroll horizontally when a line is long. */
+.wp-block-post-content pre,
+.wp-block-post-content pre.wp-block-code {
+	background-color: var( --garden-wash );
+	border: 1px solid var( --garden-rule );
+	border-radius: 5px;
+	padding: 0.9rem 1.1rem;
+	margin-inline: 0;
+	max-width: none;
+	overflow-x: auto;
+	font-size: 0.875rem;
+	line-height: 1.55;
+	tab-size: 2;
+}
+
+.wp-block-post-content pre code,
+.wp-block-post-content pre .shcb-code-table {
+	background: transparent;
+	border: 0;
+	padding: 0;
+	font-size: inherit;
+}
+
+.garden-note__main > .wp-block-post-content > pre,
+.garden-note__main > .wp-block-post-content > .wp-block-code,
+.garden-note__main > .wp-block-post-content > figure {
+	max-width: none;
+}
+
+.wp-block-post-content table {
+	display: block;
+	overflow-x: auto;
+	max-width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+}
+
+.wp-block-post-content th,
+.wp-block-post-content td {
+	border: 1px solid var( --garden-rule );
+	padding: 0.4rem 0.6rem;
+	text-align: left;
+}
+
+.wp-block-post-content hr {
+	border: 0;
+	border-top: 1px solid var( --garden-rule );
+	margin: 3rem auto;
+	width: 100%;
+}
+
+/* === header === */
+.garden-header {
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	background-color: color-mix( in srgb, var( --garden-paper ) 88%, transparent );
+	-webkit-backdrop-filter: saturate( 1.4 ) blur( 10px );
+	backdrop-filter: saturate( 1.4 ) blur( 10px );
+	border-bottom: 1px solid var( --garden-rule );
+	padding-block: 0.7rem;
+}
+
+.garden-header__inner {
+	gap: 1rem 1.5rem;
+	max-width: var( --wp--style--global--wide-size );
+	margin-inline: auto;
+}
+
+.garden-brand {
+	gap: 0.7rem;
+}
+
+.garden-brand .wp-block-site-logo img {
+	border-radius: 3px;
+	display: block;
+}
+
+.garden-brand__text {
+	gap: 0.1rem;
+}
+
+.garden-brand__text .wp-block-site-title {
+	margin: 0;
+	font-size: 1.15rem;
+	font-weight: 700;
+	line-height: 1.15;
+}
+
+.garden-brand__text .wp-block-site-title a {
+	color: var( --garden-ink );
+	text-decoration: none;
+}
+
+.garden-brand__text .wp-block-site-title a:hover {
+	color: var( --garden-rust );
+}
+
+.garden-brand__text .wp-block-site-tagline {
+	margin: 0;
+	font-family: var( --garden-ui );
+	color: var( --garden-muted );
+	line-height: 1.3;
+}
+
+.garden-header__tools {
+	gap: 0.6rem 1.1rem;
+}
+
+/* Search is the primary way through a garden this size, so it stays visible
+   at every breakpoint rather than collapsing into the nav overlay. */
+.garden-search {
+	margin: 0;
+	width: 15rem;
+}
+
+/* Blockbase styles the search control with four-class selectors, so these
+   overrides have to match or beat that specificity. */
+.garden-search.wp-block-search__button-inside .wp-block-search__inside-wrapper {
+	border: 1px solid var( --garden-rule );
+	border-radius: 5px;
+	background-color: var( --garden-paper );
+	padding: 0;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.garden-search:focus-within .wp-block-search__inside-wrapper {
+	border-color: var( --garden-rust );
+	box-shadow: 0 0 0 3px color-mix( in srgb, var( --garden-rust ) 16%, transparent );
+}
+
+.garden-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__input {
+	border: 0;
+	background: transparent;
+	color: var( --garden-ink );
+	font-family: var( --garden-ui );
+	font-size: 0.875rem;
+	padding: 0.45rem 0.1rem 0.45rem 0.7rem;
+}
+
+.garden-search .wp-block-search__input::placeholder {
+	color: var( --garden-muted );
+	opacity: 1;
+}
+
+.garden-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button.has-icon {
+	background-color: transparent;
+	border: 0;
+	border-radius: 4px;
+	color: var( --garden-muted );
+	padding: 0 0.55rem;
+	margin: 0;
+	min-width: 0;
+	width: auto;
+	height: auto;
+	display: flex;
+	align-items: center;
+}
+
+/* Blockbase's hover rule is (0,6,0) thanks to its two :not() qualifiers, so the
+   child needs to out-specify it or the icon never reacts to hover. */
+.garden-search.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button.has-icon:not( .has-background ):hover,
+.garden-search.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button.has-icon:not( .has-background ):focus {
+	color: var( --garden-rust );
+	background-color: transparent;
+}
+
+.garden-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button.has-icon svg,
+.garden-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button.has-icon:hover svg {
+	width: 1.2rem;
+	height: 1.2rem;
+	min-width: 0;
+	fill: currentColor;
+}
+
+/* Protected notes. Core's form fell back to a borderless input and a heavy
+   serif button; it now matches the search field. */
+.post-password-form p:empty {
+	display: none;
+}
+
+.post-password-form p {
+	color: var( --garden-muted );
+}
+
+.post-password-form p:last-child {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 0.6rem;
+	font-family: var( --garden-ui );
+	font-size: 0.875rem;
+}
+
+.post-password-form label {
+	display: grid;
+	gap: 0.3rem;
+}
+
+.post-password-form input[type='password'] {
+	width: 15rem;
+	max-width: 100%;
+	padding: 0.45rem 0.7rem;
+	border: 1px solid var( --garden-rule );
+	border-radius: 5px;
+	background-color: var( --garden-paper );
+	color: var( --garden-ink );
+	font: inherit;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.post-password-form input[type='password']:focus {
+	outline: none;
+	border-color: var( --garden-rust );
+	box-shadow: 0 0 0 3px color-mix( in srgb, var( --garden-rust ) 16%, transparent );
+}
+
+.post-password-form .wp-block-button__link {
+	padding: 0.45rem 1rem;
+	border: 1px solid var( --garden-rust );
+	border-radius: 5px;
+	background-color: var( --garden-rust );
+	color: var( --garden-paper );
+	font: inherit;
+	font-weight: 600;
+	line-height: inherit;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.post-password-form .wp-block-button__link:hover {
+	background-color: var( --garden-deep );
+	border-color: var( --garden-deep );
+}
+
+/* Jetpack Instant Search overlay. ET Book has no glyph for the separator
+   character in the result metadata and substitutes an "ffl" ligature, so the
+   overlay chrome uses the interface font and only titles stay in ET Book. */
+.jetpack-instant-search {
+	font-family: var( --garden-ui );
+	background-color: var( --garden-paper );
+	color: var( --garden-ink );
+}
+
+.jetpack-instant-search__result-title,
+.jetpack-instant-search__result-title-link {
+	font-family: var( --wp--preset--font-family--body );
+	color: var( --garden-ink );
+}
+
+.jetpack-instant-search mark,
+.jetpack-instant-search__result-title mark,
+.jetpack-instant-search__result-expanded__content mark {
+	background-color: color-mix( in srgb, var( --garden-rust ) 20%, transparent );
+	color: inherit;
+	padding: 0 0.12em;
+	border-radius: 2px;
+}
+
+.jetpack-instant-search__search-results-title,
+.jetpack-instant-search__search-filters h2,
+.jetpack-instant-search__search-filter-list {
+	color: var( --garden-muted );
+}
+
+.garden-nav {
+	font-family: var( --garden-ui );
+	font-size: 0.875rem;
+}
+
+.garden-nav .wp-block-navigation__container {
+	gap: 1.1rem;
+	align-items: center;
+}
+
+.garden-nav .wp-block-navigation-item__content {
+	color: var( --garden-muted );
+	text-decoration: none;
+	padding: 0;
+	transition: color 0.15s ease;
+}
+
+.garden-nav .wp-block-navigation-item__content:hover,
+.garden-nav .current-menu-item .wp-block-navigation-item__content {
+	color: var( --garden-rust );
+}
+
+.garden-nav .wp-block-social-links {
+	gap: 0.4rem;
+}
+
+.garden-nav .wp-block-social-link a {
+	color: var( --garden-muted );
+}
+
+.garden-nav .wp-block-social-link:hover a {
+	color: var( --garden-rust );
+}
+/* === note layout === */
+/* .wp-site-blocks already supplies the root gutter, and alignwide does nothing
+   outside a constrained parent. Capping at the wide size and dropping the extra
+   inner padding puts the title, rail, header and footer on one grid. */
+.garden-note {
+	max-width: var( --wp--style--global--wide-size );
+	width: 100%;
+	margin-inline: auto;
+	padding-inline: 0;
+}
+
+.garden-note__head {
+	padding-top: clamp( 2rem, 5vw, 3.5rem );
+	margin-bottom: clamp( 1.5rem, 3vw, 2.25rem );
+	gap: 0.5rem;
+}
+
+.garden-crumbs {
+	font-family: var( --garden-ui );
+	color: var( --garden-muted );
+	margin: 0;
+}
+
+.garden-crumbs a {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-crumbs a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-crumbs ol,
+.garden-crumbs ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.1rem 0.45rem;
+}
+
+.garden-note__title {
+	margin: 0;
+	max-width: 34rem;
+}
+
+/* Reading column plus a narrow margin-note rail. The rail is sticky so the
+   page tree stays reachable in long notes instead of being stranded. */
+.garden-note__body {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) var( --garden-sidebar );
+	gap: clamp( 2rem, 5vw, 4.5rem );
+	align-items: start;
+}
+
+/* Blockbase's global padding plus the constrained-layout auto margins were
+   insetting the reading column ~39px from the title. Both are zeroed so the
+   title, breadcrumbs, and body share one left edge. */
+.garden-note__main.has-global-padding {
+	min-width: 0;
+	padding-inline: 0;
+}
+
+/* The main group is a constrained layout, whose `margin-inline: auto
+   !important` centred the column ~129px in from the title. */
+.garden-note__main > .wp-block-post-content {
+	max-width: var( --garden-measure );
+	margin-inline: 0 !important;
+}
+
+.garden-note__main > .wp-block-post-content > * {
+	max-width: var( --garden-measure );
+	margin-inline: 0;
+}
+
+.garden-note__main > .wp-block-post-content > .alignwide,
+.garden-note__main > .wp-block-post-content > .alignfull {
+	max-width: none;
+}
+
+.garden-note__aside {
+	position: sticky;
+	top: 5.25rem;
+	max-height: calc( 100vh - 7rem );
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	border-left: 1px solid var( --garden-rule );
+	padding-left: 1.25rem;
+	gap: 1.75rem;
+	scrollbar-width: thin;
+}
+
+.garden-note__foot {
+	padding-inline: var( --wp--preset--spacing--30 );
+	padding-block: clamp( 2rem, 5vw, 3.5rem );
+	margin-top: clamp( 2.5rem, 6vw, 4rem );
+	border-top: 1px solid var( --garden-rule );
+}
+
+/* Notes with comments closed render an empty comments block, which left a
+   ~250px dead band above the footer. */
+.garden-note__foot:not( :has( #comments ) ),
+.garden-note__foot:not( :has( .comment-respond, .comment-list ) ) {
+	display: none;
+}
+
+/* === frontmatter === */
+/* These groups use flow layout, where WordPress spaces children with
+   `margin-block-start: var(--wp--style--block-gap)` from a zero-specificity
+   :where() rule rather than `gap`. Zeroing that margin and switching the
+   containers to grid makes the gap values below actually apply — without it the
+   metadata rows sat 22px out of alignment with each other. */
+.garden-note__head,
+.garden-note__aside,
+.garden-meta__item,
+.garden-footer__col,
+.garden-footer__colophon {
+	display: grid;
+}
+
+.garden-note__head > *,
+.garden-note__aside > *,
+.garden-meta > *,
+.garden-meta__item > *,
+.garden-footer__col > *,
+.garden-footer__colophon > * {
+	margin-block-start: 0;
+}
+
+.garden-meta {
+	display: grid;
+	gap: 0.9rem;
+	align-items: start;
+}
+
+.garden-meta__item {
+	align-content: start;
+}
+
+/* The modified-time block hard-codes a leading nbsp before the date, which
+   pushed this value out of line with the other metadata rows. */
+.garden-meta__value.wp-block-tabor-post-modified-time {
+	margin-left: -0.42em;
+}
+
+.garden-label {
+	font-family: var( --garden-ui );
+	font-size: 0.6875rem;
+	font-weight: 600;
+	letter-spacing: 0.075em;
+	text-transform: uppercase;
+	color: var( --garden-muted );
+	margin: 0 0 0.15rem;
+	line-height: 1.3;
+}
+
+.garden-meta__item {
+	gap: 0;
+}
+
+.garden-meta__value,
+.garden-meta__value time,
+.garden-terms {
+	font-family: var( --garden-ui );
+	font-size: 0.8125rem;
+	line-height: 1.45;
+	color: var( --garden-ink );
+	margin: 0;
+}
+
+.garden-terms a {
+	color: var( --garden-rust );
+	text-decoration: none;
+}
+
+.garden-terms a:hover {
+	text-decoration: underline;
+}
+
+/* core/post-terms renders nothing at all when a note has no terms — not an
+   empty element — so the label has to be hidden on the absence of a value. */
+.garden-meta__item:not( :has( .garden-meta__value ) ):not( :has( .garden-terms ) ) {
+	display: none;
+}
+
+/* Growth stage beside "Tended" (see functions.php). New growth is the one
+   coloured moment in the metadata; dormant stays a quiet note. */
+.garden-growth {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	justify-self: start;
+	margin-top: 0.2rem;
+	font-family: var( --garden-ui );
+	font-size: 0.75rem;
+	line-height: 1.3;
+}
+
+.garden-growth--new {
+	color: var( --garden-sage );
+	font-weight: 600;
+}
+
+.garden-growth--new svg {
+	width: 0.95rem;
+	height: 0.95rem;
+	transform-origin: 50% 100%;
+	animation: garden-sprout 0.7s cubic-bezier( 0.16, 1, 0.3, 1 ) both;
+}
+
+.garden-growth--dormant {
+	color: var( --garden-muted );
+	font-style: italic;
+}
+
+@keyframes garden-sprout {
+	from {
+		transform: scale( 0.55 );
+	}
+}
+
+/* Child counts on area pages, so a branch reads as a branch. */
+.subpages-count {
+	display: inline-block;
+	margin-left: 0.5rem;
+	padding: 0.05rem 0.4rem;
+	border-radius: 999px;
+	background-color: var( --garden-wash );
+	border: 1px solid var( --garden-rule );
+	font-family: var( --garden-ui );
+	font-size: 0.6875rem;
+	color: var( --garden-muted );
+	vertical-align: 0.1em;
+}
+
+#blog-page-main li a:hover .subpages-count {
+	border-color: var( --garden-rust );
+	color: var( --garden-rust );
+}
+
+.subpages-empty {
+	color: var( --garden-muted );
+	font-style: italic;
+}
+
+/* Horizontal frontmatter for the no-sidebar note templates. */
+.garden-frontmatter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem 2.5rem;
+	padding-block: 0.9rem;
+	margin-bottom: clamp( 1.75rem, 4vw, 2.5rem );
+	border-top: 1px solid var( --garden-rule );
+	border-bottom: 1px solid var( --garden-rule );
+}
+
+.garden-frontmatter > * {
+	margin-block-start: 0;
+}
+
+.garden-frontmatter .garden-meta__item {
+	min-width: 6rem;
+}
+
+.garden-note--wide .garden-note__head {
+	margin-bottom: clamp( 1.25rem, 3vw, 1.75rem );
+}
+
+.garden-note__main--wide > .wp-block-post-content,
+.garden-note__main--wide > .wp-block-post-content > * {
+	max-width: 46rem;
+	margin-inline: 0;
+}
+
+/* On the no-sidebar templates the tree sits at the end of the note. */
+.garden-tree--foot {
+	margin-top: clamp( 2.5rem, 6vw, 3.5rem );
+	padding-top: 1.5rem;
+	border-top: 1px solid var( --garden-rule );
+	max-width: 46rem;
+}
+
+/* The tree usually has a single top-level ancestor, so putting the columns on
+   the root list gives one unbreakable item and no second column. Column the
+   nested list instead, where the siblings actually live. */
+.garden-tree--foot .telex-page-family-tree__list--root .telex-page-family-tree__list {
+	columns: 2 13rem;
+	column-gap: 2.5rem;
+}
+
+.garden-tree--foot .telex-page-family-tree__list--root .telex-page-family-tree__item {
+	break-inside: avoid;
+}
+/* === page tree === */
+/* The family-tree plugin ships hard-coded WP-admin blue at (0,3,0); every rule
+   below has to match or beat that to bring the tree onto the palette. */
+.garden-tree .wp-block-telex-block-telex-page-family-tree {
+	font-family: var( --garden-ui );
+	line-height: 1.4;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__list .telex-page-family-tree__list {
+	border-left: 1px solid var( --garden-rule );
+	margin-left: 0.35em;
+	padding-left: 0.75em;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item {
+	padding: 0.1em 0;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--ancestor > .telex-page-family-tree__link,
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--child > .telex-page-family-tree__link,
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--sibling > .telex-page-family-tree__link {
+	color: var( --garden-muted );
+	font-size: 0.8125rem;
+	padding: 0.15em 0.3em 0.15em 0;
+	text-decoration: none;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--ancestor > .telex-page-family-tree__link:hover,
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--child > .telex-page-family-tree__link:hover,
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--child > .telex-page-family-tree__link:focus,
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--sibling > .telex-page-family-tree__link:hover {
+	background: transparent;
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--ancestor > .telex-page-family-tree__link {
+	color: var( --garden-ink );
+	font-weight: 600;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--current > .telex-page-family-tree__label {
+	background: var( --garden-wash );
+	border-radius: 4px;
+	color: var( --garden-ink );
+	font-size: 0.8125rem;
+	font-weight: 700;
+	padding: 0.15em 0.45em;
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--current > .telex-page-family-tree__label::before {
+	color: var( --garden-rust );
+}
+
+/* On area pages — where the body is just the child list — repeating that whole
+   subtree in the rail is pure duplication; Food & Drink rendered 47 links twice.
+   The body answers "what is beneath me", the rail answers "where am I, what is
+   beside me". Substantive notes that happen to have children keep the rail
+   expanded (see the body_class filter in functions.php). */
+.garden-area-page .garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--current > .telex-page-family-tree__list {
+	display: none;
+}
+
+/* The rail is only 15rem wide, so the decorative arrows are dropped to stop
+   note titles wrapping onto three lines. Indent rules carry the hierarchy. */
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--child > .telex-page-family-tree__link::before {
+	content: '';
+}
+
+.garden-tree .wp-block-telex-block-telex-page-family-tree .telex-page-family-tree__item--ancestor > .telex-page-family-tree__link::before {
+	opacity: 0.45;
+}
+/* === page index === */
+/* 200+ notes in one nested list is unreadable as a single column, so the
+   top-level beds flow into newspaper columns and are kept whole. */
+.wp-block-post-content .garden-index {
+	columns: 3 15rem;
+	column-gap: 2.5rem;
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	font-family: var( --garden-ui );
+	font-size: 0.9rem;
+}
+
+.wp-block-post-content .garden-index > li {
+	break-inside: avoid;
+	margin: 0 0 1.4rem;
+	padding: 0;
+}
+
+.wp-block-post-content .garden-index ul {
+	list-style: none;
+	margin: 0.25rem 0 0;
+	padding-left: 0.85rem;
+	border-left: 1px solid var( --garden-rule );
+}
+
+.wp-block-post-content .garden-index li + li {
+	margin-top: 0.1rem;
+}
+
+.wp-block-post-content .garden-index a {
+	display: block;
+	padding: 0.16rem 0;
+	color: var( --garden-muted );
+	text-decoration: none;
+	line-height: 1.35;
+}
+
+.wp-block-post-content .garden-index a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+/* Top-level beds read as headings within the index. */
+.wp-block-post-content .garden-index > li > a,
+.wp-block-post-content .garden-index > li > .wp-block-pages-list__item__link {
+	color: var( --garden-ink );
+	font-weight: 600;
+	font-size: 0.95rem;
+	padding-bottom: 0.3rem;
+}
+
+.garden-index--private {
+	columns: 2 14rem;
+}
+
+/* Categories and tags */
+.wp-block-post-content .garden-cats {
+	columns: 3 14rem;
+	column-gap: 2.5rem;
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	font-family: var( --garden-ui );
+	font-size: 0.9rem;
+}
+
+.wp-block-post-content .garden-cats li {
+	break-inside: avoid;
+	margin: 0;
+}
+
+.wp-block-post-content .garden-cats ul {
+	list-style: none;
+	padding-left: 0.85rem;
+	border-left: 1px solid var( --garden-rule );
+	margin: 0.1rem 0 0;
+}
+
+.wp-block-post-content .garden-cats a {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.wp-block-post-content .garden-cats a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-tags.wp-block-tag-cloud {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	max-width: 60rem;
+}
+
+.wp-block-post-content .garden-tags a {
+	display: inline-block;
+	padding: 0.22rem 0.6rem;
+	border: 1px solid var( --garden-rule );
+	border-radius: 999px;
+	font-family: var( --garden-ui );
+	font-size: 0.8125rem !important;
+	color: var( --garden-muted );
+	text-decoration: none;
+	transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.wp-block-post-content .garden-tags a:hover {
+	border-color: var( --garden-rust );
+	color: var( --garden-rust );
+}
+
+.garden-tags .tag-link-count {
+	color: color-mix( in srgb, var( --garden-muted ) 60%, transparent );
+	font-size: 0.75rem;
+}
+/* === entry hall === */
+.garden-home {
+	padding-block: clamp( 2.5rem, 6vw, 4rem ) 0;
+}
+
+/* post-content is itself a constrained child, so it has to be widened before
+   its children can use the full wide measure. */
+.garden-home > .wp-block-post-content,
+.garden-home > .wp-block-post-content > * {
+	max-width: var( --wp--style--global--wide-size );
+}
+
+/* The generic prose list and link rules above are scoped to post-content and
+   would otherwise indent and underline these navigational lists. */
+.wp-block-post-content .garden-areas,
+.wp-block-post-content .garden-gateway__links,
+.wp-block-post-content .garden-feed__list,
+.wp-block-post-content .garden-marks__list {
+	padding-left: 0;
+	margin-left: 0;
+	list-style: none;
+}
+
+.wp-block-post-content .garden-feed__title a,
+.wp-block-post-content .garden-areas li a,
+.wp-block-post-content .garden-gateway__links a,
+.wp-block-post-content .garden-feed__date a,
+.wp-block-post-content .garden-mark__date a {
+	text-decoration: none;
+}
+
+.wp-block-post-content .garden-feed__title a:hover,
+.wp-block-post-content .garden-mark__date a:hover {
+	text-decoration: underline;
+}
+
+.wp-block-post-content .garden-feed__list li + li,
+.wp-block-post-content .garden-marks__list li + li,
+.wp-block-post-content .garden-areas li + li {
+	margin-top: 0;
+}
+
+/* Core's constrained layout centres children with `margin-inline: auto
+   !important`, so left-aligning the lede has to match that weight. */
+.wp-block-post-content > .garden-intro {
+	max-width: 36rem;
+	margin-inline: 0 !important;
+	margin-bottom: clamp( 2.5rem, 6vw, 4rem );
+}
+
+.garden-intro > * {
+	margin-inline: 0 !important;
+	max-width: none;
+}
+
+.garden-intro__lede {
+	font-size: 1.35rem;
+	line-height: 1.45;
+}
+
+.garden-intro p:last-child {
+	color: var( --garden-muted );
+}
+
+.garden-section,
+.garden-gateway {
+	padding-block: clamp( 1.75rem, 4vw, 2.5rem );
+	border-top: 1px solid var( --garden-rule );
+}
+
+.garden-section__title {
+	font-size: 1.05rem;
+	font-family: var( --garden-ui );
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var( --garden-muted );
+	margin: 0 0 0.35rem;
+}
+
+.garden-section__note {
+	color: var( --garden-muted );
+	margin: 0 0 1.25rem;
+	max-width: 34rem;
+}
+
+.garden-section__head {
+	gap: 0.25rem 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.garden-section__head .garden-section__title {
+	margin-bottom: 0;
+}
+
+.garden-section__more {
+	margin: 0;
+	font-family: var( --garden-ui );
+	font-size: 0.8125rem;
+}
+
+/* Areas: the top-level beds that branch into deeper notes. Ruled rows in the
+   same language as the planted / tended lists below, rather than a wall of
+   one-word boxes. */
+.garden-areas {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 11rem, 1fr ) );
+	gap: 0 2rem;
+}
+
+.garden-areas li,
+.garden-areas li + li {
+	margin: 0;
+	border-bottom: 1px solid var( --garden-rule );
+}
+
+.garden-areas li a {
+	display: block;
+	padding: 0.6rem 0;
+	color: var( --garden-ink );
+	text-decoration: none;
+	font-size: 1.0625rem;
+	transition: color 0.15s ease, padding-left 0.15s ease;
+}
+
+.garden-areas li a:hover {
+	color: var( --garden-rust );
+	padding-left: 0.35rem;
+}
+
+/* Two dense columns of dated links for planted / tended. */
+.garden-feed__list {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 20rem, 1fr ) );
+	gap: 0 3rem;
+}
+
+/* GenerateBlocks loop items are plain divs with no layout class, so the row
+   layout is declared here rather than relying on the block's flex layout. */
+.garden-feed__item {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 1rem;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+	border-bottom: 1px solid var( --garden-rule );
+	margin-block-start: 0;
+}
+
+.garden-marks__list > li:last-child .garden-mark {
+	border-bottom: 0;
+}
+
+.garden-feed__title {
+	margin: 0;
+	font-size: 1.0625rem;
+	font-weight: 400;
+	line-height: 1.35;
+	min-width: 0;
+}
+
+.garden-feed__title a {
+	color: var( --garden-ink );
+	text-decoration: none;
+}
+
+.garden-feed__title a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-feed__date,
+.garden-feed__item .garden-feed__date a {
+	margin: 0;
+	flex: 0 0 auto;
+	font-family: var( --garden-ui );
+	font-size: 0.75rem;
+	color: var( --garden-muted );
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+/* Bookmarks read as a dated stream. */
+.garden-marks__list {
+	display: grid;
+	gap: 0;
+}
+
+.garden-mark {
+	display: grid;
+	grid-template-columns: 6rem minmax( 0, 1fr );
+	gap: 0 1.5rem;
+	align-items: baseline;
+	padding: 0.7rem 0;
+	border-bottom: 1px solid var( --garden-rule );
+	margin-block-start: 0;
+}
+
+.garden-mark > * {
+	margin-block-start: 0;
+}
+
+.garden-mark__date,
+.garden-mark .garden-mark__date a {
+	font-family: var( --garden-ui );
+	font-size: 0.75rem;
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-mark .garden-mark__date a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-mark__body {
+	font-size: 1rem;
+	min-width: 0;
+}
+
+/* Bookmarks often carry bare URLs as their link text, which would otherwise
+   push past the column edge. */
+.garden-mark__body,
+.garden-mark__body a,
+.wp-block-indieblocks-link-preview a {
+	overflow-wrap: anywhere;
+}
+
+.garden-mark__body > * {
+	margin-block: 0;
+}
+
+.garden-mark__body > * + * {
+	margin-block-start: 0.35rem;
+}
+
+.garden-gateway__links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	font-family: var( --garden-ui );
+	font-size: 0.875rem;
+}
+
+.garden-gateway__links li {
+	margin: 0;
+}
+
+.garden-gateway__links a {
+	display: inline-block;
+	padding: 0.4rem 0.85rem;
+	border: 1px solid var( --garden-rule );
+	border-radius: 999px;
+	color: var( --garden-ink );
+	text-decoration: none;
+	transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.garden-gateway__links a:hover {
+	border-color: var( --garden-rust );
+	background-color: var( --garden-wash );
+	color: var( --garden-rust );
+}
+/* === archives === */
+.garden-archive {
+	width: 100%;
+	padding-block: clamp( 2rem, 5vw, 3rem ) 0;
+	max-width: 54rem;
+	margin-inline: auto;
+}
+
+.garden-archive__head {
+	max-width: 46rem;
+	margin-bottom: clamp( 1.5rem, 4vw, 2.25rem );
+	padding-bottom: 1.25rem;
+	border-bottom: 1px solid var( --garden-rule );
+}
+
+.garden-archive__head > * {
+	margin-block-start: 0;
+}
+
+.garden-archive__title {
+	font-size: var( --wp--preset--font-size--x-large );
+	margin: 0.1rem 0 0;
+}
+
+.garden-archive__desc {
+	color: var( --garden-muted );
+	margin-top: 0.6rem;
+	max-width: 34rem;
+}
+
+.garden-entries__list {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	display: grid;
+	gap: 0;
+}
+
+.garden-entries__list > li {
+	margin: 0;
+}
+
+/* Blockbase's archive left ~120px of air between entries; these read as a
+   dense, scannable stream instead. */
+.garden-entry {
+	display: grid;
+	gap: 0.35rem;
+	max-width: 46rem;
+	padding: 1.15rem 0;
+	border-bottom: 1px solid var( --garden-rule );
+}
+
+.garden-entry > * {
+	margin-block-start: 0;
+}
+
+.garden-entry__title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.garden-entry__title a {
+	color: var( --garden-ink );
+	text-decoration: none;
+}
+
+.garden-entry__title a:hover {
+	color: var( --garden-rust );
+}
+
+/* Bookmark titles are generated from the note body, so showing both repeats
+   the same sentence twice. post-template puts get_post_class() on each item,
+   which lets the duplicate be dropped for that post type only. */
+.garden-entries__list > li.type-indieblocks_note .garden-entry__title {
+	display: none;
+}
+
+.garden-entry__image {
+	margin: 0.35rem 0;
+}
+
+.garden-entry__image img {
+	border-radius: 4px;
+	max-height: 15rem;
+	width: auto;
+}
+
+.garden-entry__body {
+	color: var( --garden-ink );
+}
+
+.garden-entry__body > * {
+	margin-block: 0;
+}
+
+.garden-entry__body > * + * {
+	margin-block-start: 0.5rem;
+}
+
+.garden-postmeta {
+	gap: 0.3rem 1.1rem;
+	align-items: baseline;
+	margin-top: 0.25rem;
+}
+
+.garden-postmeta > *,
+.garden-postmeta .garden-postmeta__date,
+.garden-postmeta .garden-postmeta__terms {
+	margin: 0;
+	font-family: var( --garden-ui );
+	font-size: 0.75rem;
+	color: var( --garden-muted );
+}
+
+.garden-postmeta a {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-postmeta a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-pagination {
+	margin-top: 2.5rem;
+	padding-bottom: 1rem;
+	max-width: 46rem;
+	font-family: var( --garden-ui );
+	font-size: 0.875rem;
+}
+
+.garden-pagination a,
+.garden-pagination .page-numbers {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-pagination a:hover,
+.garden-pagination .current {
+	color: var( --garden-rust );
+}
+
+/* === bookmarks === */
+.garden-mark__main {
+	display: grid;
+	gap: 0.4rem;
+	min-width: 0;
+}
+
+.garden-mark__main > * {
+	margin-block-start: 0;
+}
+
+.garden-marks .garden-mark {
+	padding: 1rem 0;
+}
+
+.garden-mark__tags {
+	font-family: var( --garden-ui );
+	font-size: 0.75rem;
+	color: var( --garden-muted );
+	margin: 0;
+}
+
+.garden-mark__tags a {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-mark__tags a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+/* IndieBlocks link previews: keep them as compact cards, not full-width
+   banners that dominate each entry. */
+.wp-block-indieblocks-link-preview {
+	border: 1px solid var( --garden-rule );
+	border-radius: 5px;
+	padding: 0.6rem 0.75rem;
+	background-color: var( --garden-paper );
+	max-width: 30rem;
+}
+
+.wp-block-indieblocks-link-preview a {
+	text-decoration: none;
+}
+
+.wp-block-indieblocks-link-preview a:hover {
+	text-decoration: underline;
+}
+
+/* === footer === */
+.garden-footer {
+	border-top: 1px solid var( --garden-rule );
+	background-color: var( --garden-wash );
+	padding-block: clamp( 2.5rem, 5vw, 3.5rem );
+	margin-top: auto;
+}
+
+.garden-footer__inner {
+	gap: 2rem 4rem;
+	align-items: flex-start;
+	max-width: var( --wp--style--global--wide-size );
+	margin-inline: auto;
+}
+
+.garden-footer__col {
+	gap: 0.5rem;
+	flex: 0 0 auto;
+}
+
+.garden-footer__colophon {
+	gap: 0.5rem;
+	flex: 1 1 18rem;
+	max-width: 26rem;
+}
+
+.garden-footer__links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-family: var( --garden-ui );
+	font-size: 0.8125rem;
+}
+
+.garden-footer__links li + li {
+	margin-top: 0.3rem;
+}
+
+.garden-footer__links a {
+	color: var( --garden-muted );
+	text-decoration: none;
+}
+
+.garden-footer__links a:hover {
+	color: var( --garden-rust );
+	text-decoration: underline;
+}
+
+.garden-footer__colophon p {
+	color: var( --garden-muted );
+	margin: 0;
+}
+
+.garden-footer__credit {
+	font-family: var( --garden-ui );
+	margin-top: 0.25rem;
+}
+
+/* Keep the footer pinned to the bottom on short notes. The footer part is the
+   last flow child, so it takes the slack rather than leaving a gap beneath. */
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.wp-site-blocks > footer:last-child {
+	margin-top: auto;
+}
+/* === responsive === */
+@media ( max-width: 60rem ) {
+	:root {
+		--garden-sidebar: 13rem;
+	}
+
+	.garden-note__body {
+		gap: 2rem;
+	}
+}
+
+@media ( max-width: 48rem ) {
+	/* The rail becomes a block under the note instead of a squeezed column. */
+	.garden-note__body {
+		grid-template-columns: minmax( 0, 1fr );
+		gap: 2.5rem;
+	}
+
+	.garden-note__aside {
+		position: static;
+		max-height: none;
+		overflow: visible;
+		border-left: 0;
+		border-top: 1px solid var( --garden-rule );
+		padding-left: 0;
+		padding-top: 1.5rem;
+	}
+
+	.garden-meta {
+		grid-template-columns: repeat( auto-fit, minmax( 9rem, 1fr ) );
+		gap: 1.1rem 1.5rem;
+	}
+
+	.garden-note__main > .wp-block-post-content,
+	.garden-note__main > .wp-block-post-content > * {
+		max-width: none;
+	}
+
+	.garden-note__title {
+		max-width: none;
+	}
+
+	/* Stacked brand, search and nav are ~210px tall; pinned, that ate a quarter
+	   of a phone screen for the whole read. */
+	.garden-header {
+		position: static;
+	}
+
+	/* Search keeps a full-width row of its own rather than shrinking to fit
+	   beside the nav links. */
+	.garden-header__inner {
+		gap: 0.75rem;
+	}
+
+	.garden-header__tools {
+		flex: 1 1 100%;
+		gap: 0.75rem;
+	}
+
+	.garden-search {
+		flex: 1 1 100%;
+		width: 100%;
+	}
+
+	.garden-nav {
+		flex: 1 1 100%;
+	}
+
+	.garden-nav .wp-block-navigation__container {
+		justify-content: flex-start;
+	}
+
+	.garden-footer__inner {
+		gap: 1.75rem 2.5rem;
+	}
+
+	/* A 96px date column left bookmark text only ~214px wide, wrapping long
+	   link titles to five or more lines. Stack the date above instead. */
+	.garden-mark {
+		grid-template-columns: minmax( 0, 1fr );
+		gap: 0.3rem;
+		align-items: start;
+	}
+
+	.garden-feed__list {
+		grid-template-columns: minmax( 0, 1fr );
+	}
+
+	.garden-areas {
+		grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
+		gap: 0 1.5rem;
+	}
+
+	.garden-archive,
+	.garden-entry,
+	.garden-note__main--wide > .wp-block-post-content,
+	.garden-note__main--wide > .wp-block-post-content > *,
+	.garden-tree--foot {
+		max-width: none;
+	}
+
+	.garden-tree--foot .wp-block-telex-block-telex-page-family-tree {
+		columns: 1;
+	}
+
+	.wp-block-post-content .garden-index,
+	.wp-block-post-content .garden-cats,
+	.garden-index--private {
+		columns: 1;
+	}
+}
+
+@media ( max-width: 30rem ) {
+	.garden-brand__text .wp-block-site-title {
+		font-size: 1.05rem;
+	}
+
+	.garden-note__aside {
+		font-size: 0.9rem;
+	}
+}
+/* === 404 === */
+.garden-404 {
+	width: 100%;
+	padding-block: clamp( 3rem, 8vw, 5rem );
+	max-width: 40rem;
+	margin-inline: auto;
+	display: grid;
+	gap: 0.75rem;
+}
+
+.garden-404 > * {
+	margin-block-start: 0;
+}
+
+.garden-404__note {
+	color: var( --garden-muted );
+	margin-bottom: 0.75rem;
+}
+
+.garden-search--404 {
+	width: 100%;
+	max-width: 24rem;
+	margin-bottom: 0.75rem;
+}
+
+/* === single post extras === */
+.garden-note__image {
+	margin-bottom: 1.75rem;
+	max-width: 46rem;
+}
+
+.garden-note__image img {
+	border-radius: 5px;
+	width: 100%;
+	height: auto;
+}
+
+.garden-note__aftermatter {
+	display: grid;
+	gap: 1.25rem;
+	max-width: 46rem;
+	margin-top: 2.5rem;
+}
+
+.garden-note__aftermatter > * {
+	margin-block-start: 0;
+}
+
+.garden-note__aftermatter .garden-label {
+	font-size: 0.6875rem;
+}
+
+/* === reduced motion === */
+@media ( prefers-reduced-motion: reduce ) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	.garden-areas li a,
+	#blog-page-main li a {
+		transition: none;
+	}
+}
+

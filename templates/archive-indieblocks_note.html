@@ -1,0 +1,43 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"className":"garden-archive","align":"wide","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide garden-archive"><!-- wp:group {"className":"garden-archive__head","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-archive__head"><!-- wp:query-title {"type":"archive","showPrefix":false,"className":"garden-archive__title"} /-->
+
+<!-- wp:paragraph {"className":"garden-archive__desc"} -->
+<p class="garden-archive__desc">Links worth keeping. Saved as I read, with a note on why.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":2,"query":{"perPage":30,"pages":0,"offset":0,"postType":"indieblocks_note","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"tagName":"main","className":"garden-marks","layout":{"type":"default"}} -->
+<main class="wp-block-query garden-marks"><!-- wp:post-template {"className":"garden-marks__list","layout":{"type":"default"}} -->
+<!-- wp:group {"className":"garden-mark","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-mark"><!-- wp:post-date {"format":"M j, Y","isLink":true,"className":"garden-mark__date"} /-->
+
+<!-- wp:group {"className":"garden-mark__main","layout":{"type":"default"}} -->
+<div class="wp-block-group garden-mark__main"><!-- wp:post-content {"metadata":{"ignoredHookedBlocks":["activitypub/reactions"]},"className":"garden-mark__body"} /-->
+
+<!-- wp:indieblocks/link-preview /-->
+
+<!-- wp:post-terms {"term":"post_tag","className":"garden-mark__tags","prefix":"tagged "} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>No bookmarks yet.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+<!-- wp:query-pagination {"className":"garden-pagination","layout":{"type":"flex","justifyContent":"space-between"}} -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination --></main>
+<!-- /wp:query --></div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer-container"} /-->
