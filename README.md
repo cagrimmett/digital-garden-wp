@@ -23,7 +23,7 @@ The templates use blocks from these plugins. Without them those blocks simply do
 | --- | --- |
 | [Gutenberg](https://wordpress.org/plugins/gutenberg/) | Breadcrumbs block |
 | [Get Subpages List](https://wordpress.org/plugins/get-subpages-list/) | Child list on area pages |
-| Page Family Tree (Telex) | "Nearby in the garden" tree |
+| [Page Family Tree](https://github.com/cagrimmett/page-family-tree) | "Nearby in the garden" tree |
 | [Post Modified Time Block](https://wordpress.org/plugins/post-modified-time-block/) | "Tended" date and growth stage |
 | [IndieBlocks](https://wordpress.org/plugins/indieblocks/) | Bookmarks and link previews |
 | [ActivityPub](https://wordpress.org/plugins/activitypub/) | Fediverse reactions on posts |
