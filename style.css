@@ -1182,14 +1182,16 @@ li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	display: grid;
-	grid-template-columns: repeat( auto-fill, minmax( 11rem, 1fr ) );
-	gap: 0 2rem;
+	/* Columns, not a grid: a grid strands the last area alone on its own row
+	   whenever the count doesn't divide evenly. Columns balance it out. */
+	columns: 4;
+	column-gap: 2rem;
 }
 
 .garden-areas li,
 .garden-areas li + li {
 	margin: 0;
+	break-inside: avoid;
 	border-bottom: 1px solid var( --garden-rule );
 }
 
@@ -1207,11 +1209,22 @@ li {
 	padding-left: 0.35rem;
 }
 
-/* Two dense columns of dated links for planted / tended. */
+/* Two dense columns of dated links for planted / tended. Fixed at two so the
+   ten-item feeds split 5 + 5 instead of leaving a lone item on a fourth row. */
 .garden-feed__list {
 	display: grid;
-	grid-template-columns: repeat( auto-fit, minmax( 20rem, 1fr ) );
+	grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
 	gap: 0 3rem;
+}
+
+/* Core's post template wraps each item in an li; stretch the item to the row
+   so its rule lines up with its neighbour's when a title wraps. */
+.garden-feed__list > li {
+	display: flex;
+}
+
+.garden-feed__list > li > .garden-feed__item {
+	flex: 1;
 }
 
 /* GenerateBlocks loop items are plain divs with no layout class, so the row
@@ -1697,8 +1710,8 @@ li {
 	}
 
 	.garden-areas {
-		grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
-		gap: 0 1.5rem;
+		columns: 2;
+		column-gap: 1.5rem;
 	}
 
 	.garden-archive,

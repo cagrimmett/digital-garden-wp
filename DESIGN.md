@@ -178,7 +178,7 @@ Under `prefers-color-scheme: dark`, the same eight roles swap to the `-dark` val
 - **Rail order:** meta (Planted, Tended, Filed under, Tagged), then "Nearby in the garden", then "Linked from". Empty groups render nothing rather than an empty label.
 - **Spacing:** the theme.json scale steps from 0.5rem to 6rem. Block gap is 1.4rem; the side gutter is step 30 (1.75rem). Flow-layout groups that need real gaps are switched to grid with child margins zeroed.
 - **Breakpoints:** 60rem narrows the rail. At 48rem the rail drops below the note as an auto-fit grid of 9rem cells with a top rule, the header stops being sticky, and the area list goes to two columns. At 30rem the brand text and rail type step down.
-- **Home:** areas as ruled rows in an auto-fill grid (11rem minimum columns), then two dense columns of dated links for recently planted and recently tended.
+- **Home:** areas as ruled rows in four balanced CSS columns (two on phones), so an odd count never strands one area alone on a row. Then recently planted and recently tended, each a fixed two-column grid of dated links that splits ten items 5 + 5.
 
 ## Elevation & Depth
 
