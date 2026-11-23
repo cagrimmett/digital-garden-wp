@@ -136,7 +136,7 @@ A warm, low-chroma paper-and-ink palette with one rust accent and one sage momen
 - **Ink** (`ink`): body text, headings and list links at rest.
 - **Muted Ink** (`muted-ink`): sidebar labels, dates, counts, placeholders, blockquotes and the "Dormant" state.
 - **Wash** (`wash`): code backgrounds, count badges and the current item in the page tree.
-- **Rule** (`rule`): every border and divider: list rows, the sidebar edge, the header's bottom edge and field strokes.
+- **Rule** (`rule`): every border and divider: list rows, the sidebar edge and field strokes. The header's bottom edge mixes in 15% ink so it holds against the paper before anything scrolls under it.
 
 ### Dark mode
 Under `prefers-color-scheme: dark`, the same eight roles swap to the `-dark` values. The palette preset variables are redefined, so components never branch on theme. Raster images are dimmed slightly (`brightness(0.92) contrast(1.02)`).

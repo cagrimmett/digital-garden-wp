@@ -330,7 +330,9 @@ html {
 	background-color: color-mix( in srgb, var( --garden-paper ) 88%, transparent );
 	-webkit-backdrop-filter: saturate( 1.4 ) blur( 10px );
 	backdrop-filter: saturate( 1.4 ) blur( 10px );
-	border-bottom: 1px solid var( --garden-rule );
+	/* A touch of ink in the rule so the header still separates from the page
+	   at the top, before anything scrolls under it. */
+	border-bottom: 1px solid color-mix( in srgb, var( --garden-rule ), var( --garden-ink ) 15% );
 	padding-block: 0.7rem;
 }
 
