@@ -317,6 +317,12 @@ li {
 }
 
 /* === header === */
+/* Keep in-page anchors (the footer's Recently tended link) clear of the
+   sticky header. */
+html {
+	scroll-padding-top: 5.25rem;
+}
+
 .garden-header {
 	position: sticky;
 	top: 0;
@@ -1634,6 +1640,10 @@ li {
 }
 
 @media ( max-width: 48rem ) {
+	html {
+		scroll-padding-top: 1rem;
+	}
+
 	/* The rail becomes a block under the note instead of a squeezed column. */
 	.garden-note__body {
 		grid-template-columns: minmax( 0, 1fr );
