@@ -1338,7 +1338,8 @@ li {
 	font-size: 0.875rem;
 }
 
-.garden-gateway__links li {
+.garden-gateway__links li,
+.garden-gateway__links li + li {
 	margin: 0;
 }
 
